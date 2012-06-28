@@ -83,6 +83,9 @@ module ObjectDiff
       @differences << Addition.new(@key, new_value)
     end
 
+    # This is where I plan to hook in, to start supporting nested hash diffs.
+    # My gut feeling is that I'll need to introduce an ObjectDiff::Change and
+    # use that instead of a Removal and Addition pair.
     def add_change_for_key
       @differences << Removal.new(@key, old_value)
       @differences << Addition.new(@key, new_value)
