@@ -1,5 +1,5 @@
 require 'object_diff/hash'
-require 'support/object_diff_hash_example'
+require 'support/example_factory'
 require 'support/perturbations'
 
 include Perturbations
@@ -63,15 +63,10 @@ describe ObjectDiff::Hash do
       hash_diff.to_s.should eq( "- :change: :from\n+ :change: :to\n" )
     end
 
-    Dir.glob('*-test.txt') do |filename|
+    extend ExampleFactory
 
-      it "fulfills the example described in #{filename}" do
-        example = ObjectDiffHashExample.new File.read(filename)
-        hash_diff = ObjectDiff::Hash.new( example.old_hash, example.new_hash )
-        hash_diff.to_s.should eq( example.expected_diff_string )
-      end
-
-    end
+    # TODO I would prefer more explicit it_fulfills_examples('spec/examples/*-test.txt')
+    it_fulfills_examples('*-test.txt')
 
   end
 
