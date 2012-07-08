@@ -19,7 +19,7 @@ module ObjectDiff
     end
 
     def as_string_with_sign
-      "#{self.class::SIGN} #{@key.inspect}: #{@value}"
+      "#{sign} #{@key.inspect}: #{@value}"
     end
 
     def as_string_without_sign
@@ -35,14 +35,26 @@ module ObjectDiff
   end
 
   class Removal < Difference
-    
+
+    private
+
     SIGN = '-'
+
+    def sign
+      SIGN
+    end
   
   end
 
   class Addition < Difference
 
+    private
+
     SIGN = '+'
+
+    def sign
+      SIGN
+    end
 
   end
 
