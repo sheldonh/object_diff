@@ -1,6 +1,6 @@
 require 'yaml'
 
-class ObjectDiffHashExample
+class ObjectDiffHashDiffExample
 
   def initialize(example)
     @example = example

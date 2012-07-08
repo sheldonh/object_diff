@@ -1,4 +1,4 @@
-require 'support/object_diff_hash_example'
+require 'support/object_diff_hash_diff_example'
 
 module ExampleFactory
 
@@ -16,9 +16,9 @@ module ExampleFactory
 
   def build_example_from_file(filename)
     it "fulfills the example described in #{relative_example_path(filename)}" do
-      example = ObjectDiffHashExample.new File.read(filename)
-      hash_diff = ObjectDiff::Hash.new( example.old_hash, example.new_hash )
-      hash_diff.to_s.should eq( example.expected_diff_string )
+      example = ObjectDiffHashDiffExample.new File.read(filename)
+      hash_diff = ObjectDiff::HashDiff.new( example.old_hash, example.new_hash )
+      hash_diff.unified_diff.should eq( example.expected_diff_string )
     end
   end
 

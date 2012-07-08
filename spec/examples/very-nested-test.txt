@@ -1,0 +1,32 @@
+---
+old:
+  :foo: :old
+  :bar:
+    :removed: :value
+    :changed: :old
+    :deeply:
+      :nested:
+        :removed: :value
+        :changed: :old
+      :unchanged: Do not want
+new:
+  :foo: :new
+  :bar:
+    :changed: :new
+    :added: :value
+    :deeply:
+      :nested:
+        :added: :value
+        :changed: :new
+      :unchanged: Do not want
+...
++ :bar: :added: :value
+- :bar: :changed: :old
++ :bar: :changed: :new
++ :bar: :deeply: :nested: :added: :value
+- :bar: :deeply: :nested: :changed: :old
++ :bar: :deeply: :nested: :changed: :new
+- :bar: :deeply: :nested: :removed: :value
+- :bar: :removed: :value
+- :foo: :old
++ :foo: :new
