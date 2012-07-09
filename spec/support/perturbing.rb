@@ -1,6 +1,6 @@
-module Perturbations
+module Perturbing
 
-  def making_a_change_to_hash(object)
+  def self.the_hash(object)
     if object.include?(:perturbation)
       object.delete :perturbation
     else

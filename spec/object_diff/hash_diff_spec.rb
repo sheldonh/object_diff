@@ -1,9 +1,7 @@
 require 'spec_helper'
-require 'support/example_factory'
-require 'support/perturbations'
+require 'support/example_prescription_fulfillment'
+require 'support/perturbing'
 require 'object_diff'
-
-include Perturbations
 
 describe ObjectDiff::HashDiff do
 
@@ -33,15 +31,13 @@ describe ObjectDiff::HashDiff do
       hash_diff.unified_diff.should eq( "- :change: :from\n+ :change: :to\n" )
     end
 
-    extend ExampleFactory
-
-    # TODO I would prefer more explicit it_fulfills_examples('spec/examples/*-test.txt')
-    it_fulfills_examples('*-test.txt')
+    extend ExamplePrescriptionFulfillment
+    it_fulfills_the_examples_prescribed_by '*-test.txt'
 
     it "caches the first comparison to avoid recomparison on subsequent access" do
       old, new = { no: :change }, { no: :change }
       hash_diff = ObjectDiff::HashDiff.new( old, new )
-      expect { making_a_change_to_hash(new) }.to_not change { hash_diff.unified_diff }
+      expect { Perturbing.the_hash(new) }.to_not change { hash_diff.unified_diff }
     end
 
   end
