@@ -1,8 +1,9 @@
 module PerturbingHashLikeObjects
 
-  def self.perturb(hash_like)
+  def perturb(hash_like)
     HashLikePerturbation.new(hash_like).perturb
   end
+  alias_method :perturbing, :perturb
 
   class HashLikePerturbation
 
