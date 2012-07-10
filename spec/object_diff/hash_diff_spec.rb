@@ -11,12 +11,12 @@ describe ObjectDiff::HashDiff do
 
   describe "#different?" do
 
-    it "is false for identical hashes" do
+    it "is false for identical hash-like objects" do
       diff = ObjectDiff::HashDiff.new( hash_like(no: :change), hash_like(no: :change) )
       diff.different?.should eq( false )
     end
 
-    it "is true for different hashes" do
+    it "is true for different hash-like objects" do
       diff = ObjectDiff::HashDiff.new( hash_like(change: :from), hash_like(change: :to) )
       diff.different?.should eq( true )
     end
@@ -25,12 +25,12 @@ describe ObjectDiff::HashDiff do
 
   describe "#unified_diff" do
 
-    it "produces an empty string for identical hashes" do
+    it "produces an empty string for identical hash-like objects" do
       diff = ObjectDiff::HashDiff.new( hash_like(no: :change), hash_like(no: :change) )
       diff.unified_diff.should eq( '' )
     end
 
-    it "produces unified diff output for different hashes" do
+    it "produces unified diff output for different hash-like objects" do
       diff = ObjectDiff::HashDiff.new( hash_like(change: :from), hash_like(change: :to) )
       diff.unified_diff.should eq( "- :change: :from\n+ :change: :to\n" )
     end
