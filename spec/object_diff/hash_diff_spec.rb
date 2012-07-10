@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'support/example_prescription_fulfillment'
 require 'support/making_hash_like_objects'
 require 'support/perturbing_hash_like_objects'
+
 require 'object_diff/hash_diff'
 
 describe ObjectDiff::HashDiff do
@@ -35,7 +36,7 @@ describe ObjectDiff::HashDiff do
       diff.unified_diff.should eq( "- :change: :from\n+ :change: :to\n" )
     end
 
-    for_each_example_prescribed_by('*-test.txt') do |prescription|
+    for_each_example_prescribed_by('hash_diff/*.txt') do |prescription|
       it "produces the expected output" do
         hash_diff = ObjectDiff::HashDiff.new( prescription.input(:old), prescription.input(:new) )
         hash_diff.unified_diff.should eq( prescription.expected_output )
