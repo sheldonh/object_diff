@@ -1,0 +1,16 @@
+---
+old:
+  - :same
+  - :removed
+  - :also_same
+  - :changed_old
+new:
+  - :same
+  - :also_same
+  - :changed_new
+  - :added
+...
+- 1: :removed
+- 3: :changed_old
++ 2: :changed_new
++ 3: :added
