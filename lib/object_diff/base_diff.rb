@@ -16,12 +16,14 @@ module ObjectDiff
       differences.collect { |difference| difference.to_s + "\n" }.join
     end
 
-    private
+    protected
 
     def differences
       calculate_differences_if_first_time
       @differences
     end
+
+    private
 
     def calculate_differences_if_first_time
       if @differences.nil?

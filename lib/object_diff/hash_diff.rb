@@ -62,7 +62,7 @@ module ObjectDiff
 
     def add_change_for_key
       if both_values_are_hash_like?
-        recursively_add_changes_for_nested_hashes
+        add_differences_between_hash_like_values
       else
         add_removal_for_key
         add_addition_for_key
@@ -73,19 +73,20 @@ module ObjectDiff
       hash_like?(old_value) and hash_like?(new_value)
     end
 
-    def recursively_add_changes_for_nested_hashes
-      nested_hash_differences.each do |nested_difference|
-        add_nested_difference(nested_difference)
+    def add_differences_between_hash_like_values
+      differences_between_hash_like_values.each do |difference|
+        nest_difference(difference)
       end
     end
 
-    def nested_hash_differences
-      nested_diff = NestedHashDiff.new(old_value, new_value)
-      nested_diff.send(:differences)
+    def differences_between_hash_like_values
+      diff = self.class.new(old_value, new_value)
+      diff.differences
     end
 
-    def add_nested_difference(nested_difference)
-      add_difference(nested_difference.class.new(@key, nested_difference.to_s))
+    def nest_difference(difference)
+      nested_difference = difference.nested_under_key(@key)
+      add_difference(nested_difference)
     end
 
     def hash_like?(object)
@@ -103,24 +104,7 @@ module ObjectDiff
     end
 
     def add_difference(difference)
-      set_sign_display_in_difference(difference)
       @differences << difference
-    end
-
-    def set_sign_display_in_difference(difference)
-      difference.include_sign_in_display = include_sign_in_display_at_this_level
-    end
-
-    def include_sign_in_display_at_this_level
-      true
-    end
-
-    class NestedHashDiff < self
-
-      def include_sign_in_display_at_this_level
-        false
-      end
-
     end
 
   end

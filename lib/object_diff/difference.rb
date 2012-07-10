@@ -2,27 +2,24 @@ module ObjectDiff
 
   class Difference
 
-    attr_accessor :include_sign_in_display
-
     def initialize(key, value)
       @key = key
       @value = value
-      @include_sign_in_display = true
+    end
+
+    def nested_under_key(key)
+      self.class.new(key, to_string_without_sign)
     end
 
     def to_s
-      if @include_sign_in_display
-        as_string_with_sign
-      else
-        as_string_without_sign
-      end
+      to_string_with_sign
     end
 
-    def as_string_with_sign
-      "#{sign} #{@key.inspect}: #{@value}"
+    def to_string_with_sign
+      "#{sign} #{to_string_without_sign}"
     end
 
-    def as_string_without_sign
+    def to_string_without_sign
       "#{@key.inspect}: #{@value}"
     end
 
