@@ -1,7 +1,9 @@
+require 'forwardable'
+
 module MakingHashLikeObjects
 
-  def hash_like(hash)
-    HashLike.new(hash)
+  def hash_like(real_hash)
+    HashLike.new(real_hash)
   end
 
   class HashLike
@@ -11,6 +13,12 @@ module MakingHashLikeObjects
 
     def initialize(real_hash)
       @real_hash = real_hash
+    end
+
+    private
+
+    def delegee
+      @real_hash
     end
 
   end

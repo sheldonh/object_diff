@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'support/example_prescription_fulfillment'
 require 'support/making_hash_like_objects'
-require 'support/perturbing'
+require 'support/perturbing_hash_like_objects'
 require 'object_diff'
 
 describe ObjectDiff::HashDiff do
@@ -38,7 +38,7 @@ describe ObjectDiff::HashDiff do
     it "caches the first comparison to avoid recomparison on subsequent access" do
       old, new = { no: :change }, { no: :change }
       diff = ObjectDiff::HashDiff.new( old, new )
-      expect { Perturbing.the_hash(new) }.to_not change { diff.unified_diff }
+      expect { PerturbingHashLikeObjects.perturb(new) }.to_not change { diff.unified_diff }
     end
 
   end
