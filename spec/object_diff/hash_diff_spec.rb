@@ -32,8 +32,12 @@ describe ObjectDiff::HashDiff do
       diff.unified_diff.should eq( "- :change: :from\n+ :change: :to\n" )
     end
 
-    extend ExamplePrescriptionFulfillment
-    it_fulfills_the_examples_prescribed_by '*-test.txt'
+    for_each_example_prescribed_by('*-test.txt') do |prescription|
+      it "produces the expected output" do
+        hash_diff = ObjectDiff::HashDiff.new( prescription.input(:old), prescription.input(:new) )
+        hash_diff.unified_diff.should eq( prescription.expected_output )
+      end
+    end
 
     it "caches the first comparison to avoid recomparison on subsequent access" do
       old, new = { no: :change }, { no: :change }
