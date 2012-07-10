@@ -61,7 +61,7 @@ module ObjectDiff
     end
 
     def add_change_for_key
-      if both_values_are_hashes?
+      if both_values_are_hash_like?
         recursively_add_changes_for_nested_hashes
       else
         add_removal_for_key
@@ -69,8 +69,8 @@ module ObjectDiff
       end
     end
 
-    def both_values_are_hashes?
-      old_value.is_a?(Hash) and new_value.is_a?(Hash)
+    def both_values_are_hash_like?
+      hash_like?(old_value) and hash_like?(new_value)
     end
 
     def recursively_add_changes_for_nested_hashes
@@ -88,12 +88,18 @@ module ObjectDiff
       add_difference(nested_difference.class.new(@key, nested_difference.to_s))
     end
 
+    def hash_like?(object)
+      object.respond_to?(:keys) and
+      object.respond_to?(:include?) and
+      object.respond_to?(:fetch)
+    end
+
     def old_value
-      @old[@key]
+      @old.fetch(@key)
     end
 
     def new_value
-      @new[@key]
+      @new.fetch(@key)
     end
 
     def add_difference(difference)
