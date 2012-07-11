@@ -1,0 +1,37 @@
+---
+#
+# Failing. In the deeply nested example, I got results suggesting that the algorithm
+# wasn't very good at lining up nested array comparisons. So I constructed this test
+# to boil it down to something simple and I get this unexpected result:
+#
+# - 1: :b
+# + 1: :b
+# + 2: :c
+#
+# It only makes sense when you see the context:
+#
+# #<Diff::LCS::ContextChange:6612920 @action=- positions=0,0 elements=:a,nil>
+# <Diff::LCS::ContextChange:6612220 @action=- positions=1,0 elements=:b,nil>
+# <Diff::LCS::ContextChange:6611660 @action== positions=2,0 elements=[:x, :y, :z],[:x, :y, :z]>
+# <Diff::LCS::ContextChange:6610800 @action=+ positions=3,1 elements=nil,:b>
+# <Diff::LCS::ContextChange:6610280 @action=+ positions=3,2 elements=nil,:c>
+#
+old:
+  - :a
+  - :b
+  -
+    - :x
+    - :y
+    - :z
+new:
+  -
+    - :x
+    - :y
+    - :z
+  - :b
+  - :c
+...
+- 0: :a
++ 0: [:x, :y, :z]
+- 2: [:x, :y, :z]
++ 2: :c
